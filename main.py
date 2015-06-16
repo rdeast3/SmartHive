@@ -12,12 +12,13 @@ if __name__ == "__main__":
 	leftCorner.setup()
 
 	while True:
-		fsr =leftCorner.readADC()
-		leftCorner.addToList(fsr)
-	
-		print("FSR:", fsr)
-		print("list:", leftCorner.weightList)
+		for i in range(5):
+			fsr = leftCorner.readADC()
+			leftCorner.addToList(fsr)
+		med = leftCorner.findMedian()
+		print("med:", med)	
 		inp = input()
+		leftCorner.clearList()
 		if(inp == "0"):
 			GPIO.cleanup()
 			break

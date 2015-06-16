@@ -1,8 +1,19 @@
+#
+# File: weight.py
+# Author: Ronald East
+#
+# Description: This class sets up the MCP3008 and uses an analog to digital conversion
+#		function to determine the weight. There are also various other methods
+# 		that take care of various other functions related to the weight.
+#
+
 import RPi.GPIO as GPIO
+import math
 
 class Weight(object):
 	def __init__(self, prtNum):
-		self.prtNum = prtNum
+		# This is the initialization function
+		self.prtNum = prtNum	# The channel the sensor is on
 		self.CS = 19	
 		self.CLK = 5
 		self.DIN = 13
@@ -19,7 +30,9 @@ class Weight(object):
 	def readADC(self):
 		# This function is based on the readadc function written by 
 		# Limor "Ladyada" Fried for Adafruit Industries, (c) 2015
-
+		# It takes the input from the sensor value and sets it to a
+		# 1 or 0 and shifts that value until all bits have been set.
+		# It then returns the integer value of the converted value
 		if ((self.prtNum > 7) or (self.prtNum < 0)):	
 			return -1
 		GPIO.output(self.CS, True)
@@ -54,4 +67,15 @@ class Weight(object):
 		return adcOut
 
 	def addToList(self, adcVal):
+		# This funciton takes in the conversion value and adds it
+		# to the list.
 		self.weightList.append(adcVal)	
+	
+	def clearList(self):
+		# This sets the list to a null list	
+		self.weightList = []
+
+	def findMedian(self):
+		# Sorts the list and returns the middle value
+		self.weightList.sort()
+		return self.weightList[math.ceil(len(self.weightList)/2)]
