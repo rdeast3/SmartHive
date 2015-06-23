@@ -78,4 +78,8 @@ class Weight(object):
 	def findMedian(self):
 		# Sorts the list and returns the middle value
 		self.weightList.sort()
-		return self.weightList[math.ceil(len(self.weightList)/2)]
+		if len(self.weightList)%2:
+			return self.weightList[math.ceil(len(self.weightList)/2)]
+		elif not(len(self.weightList)%2):
+			mid = self.weightList[((math.trunc(len(self.weightList)/2)+math.ceil(len(self.weightList)/2))/2)]
+			return mid
