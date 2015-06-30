@@ -34,11 +34,10 @@ class TempHumid(object):
 	def __init__(self):
 		self.type = Adafruit_DHT.DHT11
 		self.pin = 21
-		self.data = {"temp": [], "humid": []}
-		self.temp = []
-		self.humid = []
+		self.temp = 0 
+		self.humid = 0
 
 	def read(self):
 		humidRead, tempRead = Adafruit_DHT.read_retry(self.type, self.pin)
-		self.temp.append(tempRead)
-		self.humid.append(humidRead)
+		self.temp = tempRead
+		self.humid = humidRead
